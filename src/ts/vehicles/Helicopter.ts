@@ -14,6 +14,11 @@ export class Helicopter extends Vehicle implements IControllable, IWorldEntity
 	public entityType: EntityType = EntityType.Helicopter;
 	public rotors: THREE.Object3D[] = [];
 	private enginePower: number = 0;
+	
+	public get classname(): string
+	{
+		return 'Helicopter';
+	}
 
 	constructor(gltf: any)
 	{
@@ -34,7 +39,6 @@ export class Helicopter extends Vehicle implements IControllable, IWorldEntity
 			'rollRight': new KeyBinding('KeyD'),
 			'exitVehicle': new KeyBinding('KeyF'),
 			'seat_switch': new KeyBinding('KeyX'),
-			'view': new KeyBinding('KeyV'),
 		};
 	}
 
@@ -77,10 +81,7 @@ export class Helicopter extends Vehicle implements IControllable, IWorldEntity
 		{
 			this.forceCharacterOut();
 		}
-		if (this.actions.view.justPressed)
-		{
-			this.toggleFirstPersonView();
-		}
+
 	}
 
 	public physicsPreStep(body: CANNON.Body, heli: Helicopter): void
@@ -232,10 +233,6 @@ export class Helicopter extends Vehicle implements IControllable, IWorldEntity
 				desc: 'Roll'
 			},
 			{
-				keys: ['V'],
-				desc: 'View select'
-			},
-			{
 				keys: ['F'],
 				desc: 'Exit vehicle'
 			},
@@ -244,8 +241,12 @@ export class Helicopter extends Vehicle implements IControllable, IWorldEntity
 				desc: 'Respawn'
 			},
 			{
-				keys: ['Shift', '+', 'C'],
-				desc: 'Free camera'
+				keys: ['Ctrl', '+', 'V'],
+				desc: 'Change camera'
+			},
+			{
+				keys: ['V'],
+				desc: 'Change point of view'
 			},
 		]);
 	}

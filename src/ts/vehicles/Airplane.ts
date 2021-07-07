@@ -26,6 +26,11 @@ export class Airplane extends Vehicle implements IControllable, IWorldEntity
 	private enginePower: number = 0;
 	private lastDrag: number = 0;
 
+	public get classname(): string
+	{
+		return 'Airplane';
+	}
+
 	constructor(gltf: any)
 	{
 		super(gltf, {
@@ -55,7 +60,6 @@ export class Airplane extends Vehicle implements IControllable, IWorldEntity
 			'rollRight': new KeyBinding('KeyD'),
 			'exitVehicle': new KeyBinding('KeyF'),
 			'seat_switch': new KeyBinding('KeyX'),
-			'view': new KeyBinding('KeyV'),
 		};
 
 		this.steeringSimulator = new SpringSimulator(60, 10, 0.6); 
@@ -324,10 +328,6 @@ export class Airplane extends Vehicle implements IControllable, IWorldEntity
 		{
 			this.setBrake(0);
 		}
-		if (this.actions.view.justPressed)
-		{
-			this.toggleFirstPersonView();
-		}
 	}
 
 	public readAirplaneData(gltf: any): void
@@ -398,10 +398,6 @@ export class Airplane extends Vehicle implements IControllable, IWorldEntity
 				desc: 'Brake'
 			},
 			{
-				keys: ['V'],
-				desc: 'View select'
-			},
-			{
 				keys: ['F'],
 				desc: 'Exit vehicle'
 			},
@@ -410,8 +406,12 @@ export class Airplane extends Vehicle implements IControllable, IWorldEntity
 				desc: 'Respawn'
 			},
 			{
-				keys: ['Shift', '+', 'C'],
-				desc: 'Free camera'
+				keys: ['Ctrl', '+', 'V'],
+				desc: 'Change camera'
+			},
+			{
+				keys: ['V'],
+				desc: 'Change point of view'
 			},
 		]);
 	}

@@ -13,10 +13,6 @@ export class Car extends Vehicle implements IControllable
 {
 	public entityType: EntityType = EntityType.Car;
 	public drive: string = 'awd';
-	get speed(): number {
-		return this._speed;
-	}
-	private _speed: number = 0;
 
 	// private wheelsDebug: THREE.Mesh[] = [];
 	private steeringWheel: THREE.Object3D;
@@ -31,6 +27,17 @@ export class Car extends Vehicle implements IControllable
 
 	private canTiltForwards: boolean = false;
 	private characterWantsToExit: boolean = false;
+
+	private _speed: number = 0;
+
+	public get speed(): number{
+		return this._speed;
+	}
+
+	public get classname(): string
+	{
+		return 'Car';
+	}
 
 	constructor(gltf: any)
 	{
@@ -57,7 +64,6 @@ export class Car extends Vehicle implements IControllable
 			'right': new KeyBinding('KeyD'),
 			'exitVehicle': new KeyBinding('KeyF'),
 			'seat_switch': new KeyBinding('KeyX'),
-			'view': new KeyBinding('KeyV'),
 		};
 
 		this.steeringSimulator = new SpringSimulator(60, 10, 0.6);
@@ -285,10 +291,6 @@ export class Car extends Vehicle implements IControllable
 		{
 			this.setBrake(0, 'rwd');
 		}
-		if (this.actions.view.justPressed)
-		{
-			this.toggleFirstPersonView();
-		}
 	}
 
 	public inputReceiverInit(): void
@@ -309,10 +311,6 @@ export class Car extends Vehicle implements IControllable
 				desc: 'Handbrake'
 			},
 			{
-				keys: ['V'],
-				desc: 'View select'
-			},
-			{
 				keys: ['F'],
 				desc: 'Exit vehicle'
 			},
@@ -321,8 +319,12 @@ export class Car extends Vehicle implements IControllable
 				desc: 'Respawn'
 			},
 			{
-				keys: ['Shift', '+', 'C'],
-				desc: 'Free camera'
+				keys: ['Ctrl', '+', 'V'],
+				desc: 'Change camera'
+			},
+			{
+				keys: ['V'],
+				desc: 'Change point of view'
 			},
 		]);
 	}
